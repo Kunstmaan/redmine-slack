@@ -9,19 +9,11 @@ class SlackListener < Redmine::Hook::Listener
 
 		return unless channel and url
 
-		msg = "[#{escape issue.project}] #{escape issue.author} created <#{object_url issue}|#{escape issue}>"
+		msg = "New <#{object_url issue}|#{escape issue}>"
 
 		attachment = {}
 		attachment[:text] = escape issue.description if issue.description
 		attachment[:fields] = [{
-			:title => I18n.t("field_status"),
-			:value => escape(issue.status.to_s),
-			:short => true
-		}, {
-			:title => I18n.t("field_priority"),
-			:value => escape(issue.priority.to_s),
-			:short => true
-		}, {
 			:title => I18n.t("field_assigned_to"),
 			:value => escape(issue.assigned_to.to_s),
 			:short => true
@@ -39,13 +31,13 @@ class SlackListener < Redmine::Hook::Listener
 
 		return unless channel and url
 
-		msg = "[#{escape issue.project}] #{escape journal.user.to_s} updated <#{object_url issue}|#{escape issue}>"
+		msg = "Update for <#{object_url issue}|#{escape issue}>"
 
 		attachment = {}
 		attachment[:text] = escape journal.notes if journal.notes
 		attachment[:fields] = journal.details.map { |d| detail_to_field d }
 
-		speak msg, channel, attachment, url
+		#speak msg, channel, attachment, url
 	end
 
 	def speak(msg, channel, attachment=nil, url=nil)
