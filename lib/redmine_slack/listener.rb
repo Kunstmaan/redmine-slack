@@ -12,8 +12,8 @@ class SlackListener < Redmine::Hook::Listener
 		msg = "<#{object_url issue}|#{escape issue}> by #{escape issue.author} assigned to #{escape issue.assigned_to}"
 
 		attachment = {}
-		attachment[:text] = escape issue.description if issue.description
-		attachment[:fields] = []
+		#attachment[:text] = escape issue.description if issue.description
+		#attachment[:fields] = []
 
 		speak msg, channel, attachment, url
 	end
